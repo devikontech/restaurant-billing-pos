@@ -152,7 +152,7 @@ jobs:
 
       - name: 🤖 Create Sentry release
         if: github.event.inputs.release_type == 'beta'
-        uses: getsentry/action-release@v1
+        uses: getsentry/action-release@v2
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_RELEASE_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
