@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025.3.1 - 2025-03-02
+
+./app/build/outputs/changelogGithub.md
+
 ## 2025.2.4 - 2025-02-23
 
 ./app/build/outputs/changelogGithub.md
