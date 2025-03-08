@@ -170,7 +170,7 @@ fun AddEditCartOrderScreen(
         addOnState = addOnState,
         chargesState = chargesState,
         partnerState = partnerState,
-        onBackClick = navigator::navigateUp,
+        onBackClick = navigator::popBackStack,
         onEvent = viewModel::onEvent,
     )
 }

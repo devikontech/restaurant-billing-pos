@@ -3,7 +3,7 @@ name: Tag Weekly Release
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 4 * * 0'
+    - cron: '0 4 */15 * *'
 jobs:
   tag:
     name: Tag Weekly Release

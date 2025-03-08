@@ -23,7 +23,7 @@ on:
 jobs:
   app_build:
     name: Github, Firebase, and Sentry Release
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions:
       contents: write
     steps:
@@ -50,8 +50,15 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
           bundler-cache: true
+
+      # Install Fastlane and required plugins for deployment automation
+      - name: Install Fastlane
+        run: |
+          gem install bundler:2.2.27
+          bundle install --jobs 4 --retry 3
+          bundle exec fastlane add_plugin amazon_app_submission
+          bundle exec fastlane add_plugin semantic_release
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -126,12 +133,12 @@ jobs:
       - name: 🤖 Create Github Pre-Release
         id: create_release
         if: github.event.inputs.release_type == 'beta'
-        uses: softprops/action-gh-release@v2.0.8
+        uses: softprops/action-gh-release@v2.1.0
         with:
           tag_name: ${{ steps.rel_number.outputs.version }}
           draft: false
           prerelease: true
-          body_path: ./app/build/outputs/changelogGithub.md
+          body_path: ./app/build/outputs/changelogGithub
           files: |
             ./app/build/outputs/apk/demo/release/app-demo-release.apk
             ./app/build/outputs/apk/prod/release/app-prod-release.apk
@@ -152,7 +159,7 @@ jobs:
 
       - name: 🤖 Create Sentry release
         if: github.event.inputs.release_type == 'beta'
-        uses: getsentry/action-release@v1
+        uses: getsentry/action-release@v3
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_RELEASE_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
@@ -175,7 +182,6 @@ jobs:
 
       - name: 🤖 Prepare Amazon Listing
         if: github.event.inputs.release_type == 'beta' && github.event.inputs.amazon == 'true'
-        continue-on-error: true
         run: bundle exec fastlane prep_amazon
         env:
           AMAZON_APPSTORE_CLIENT_ID: ${{ secrets.AMAZON_APPSTORE_CLIENT_ID }}
@@ -188,7 +194,7 @@ jobs:
         uses: stefanzweifel/changelog-updater-action@v1
         with:
           latest-version: ${{ steps.rel_number.outputs.version }}
-          release-notes: ./app/build/outputs/changelogGithub.md
+          release-notes: ./app/build/outputs/changelogGithub
 
       - name: 🤖 Commit CHANGELOG.md
         if: steps.update_changelog.outcome == 'success'
@@ -200,3 +206,80 @@ jobs:
 
       - name: Print `git status`
         run: git status
+
+  play_publish:
+    name: Play Publish
+    runs-on: macos-latest
+    concurrency:
+      group: playstore_deploy
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4.7.0
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # Install Fastlane and required plugins for deployment automation
+      - name: Install Fastlane
+        run: |
+          gem install bundler:2.2.27
+          bundle install --jobs 4 --retry 3
+          bundle exec fastlane add_plugin amazon_app_submission
+          bundle exec fastlane add_plugin semantic_release
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - uses: ./.github/actions/create-release-number
+        name: Create Release Number
+        id: rel_number
+
+      - uses: ./.github/actions/inflate-secrets
+        name: Inflate Secrets
+        with:
+          keystore: ${{ secrets.KEYSTORE_FILE }}
+          google-services: ${{ secrets.GOOGLESERVICES }}
+          firebase-creds: ${{ secrets.FIREBASECREDS }}
+          playstore-creds: ${{ secrets.PLAYSTORECREDS }}
+
+      - uses: ./.github/actions/create-release-notes
+        name: Create Release Notes
+        with:
+          tag-name: ${{ steps.rel_number.outputs.version }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Release
+        env:
+          KEYSTORE_PATH: ${{ secrets.KEYSTORE_PATH }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_FILE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
+          VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        run: |
+          ./gradlew :app:bundleProdRelease
+
+      - name: Archive Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-aabs
+          path: ./**/*.aab
+
+      - name: Deploy to Playstore Internal
+        run: bundle exec fastlane deploy_internal
+
+      - name: Promote Internal to Beta
+        if: github.event.inputs.beta == 'true'
+        run: bundle exec fastlane promote_to_beta
+

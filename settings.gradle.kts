@@ -46,7 +46,7 @@ extensions.configure<ReckonExtension> {
     setTagWriter { it.toString() }
 }
 
-rootProject.name = "PoposRoom"
+rootProject.name = "restaurant-billing-pos"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
