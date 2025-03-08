@@ -16,14 +16,11 @@ on:
         description: 'This is a amazon release'
         required: false
         default: false
-  push:
-    branches:
-      - main
 
 jobs:
   app_build:
     name: Github, Firebase, and Sentry Release
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
@@ -51,14 +48,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-
-      # Install Fastlane and required plugins for deployment automation
-      - name: Install Fastlane
-        run: |
-          gem install bundler:2.2.27
-          bundle install --jobs 4 --retry 3
-          bundle exec fastlane add_plugin amazon_app_submission
-          bundle exec fastlane add_plugin semantic_release
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -102,7 +91,7 @@ jobs:
         id: build_release
         env:
           KEYSTORE_PATH: ${{ secrets.KEYSTORE_PATH }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_FILE_PASSWORD }}
+          KEYSTORE_PASSWORD: ${{ secrets.-KEYSTORE_FILE_PASSWORD }}
           KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
@@ -179,14 +168,6 @@ jobs:
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           VERSION_CODE: ${{ steps.rel_number.outputs.version-code }}
         run: ./gradlew appDistributionUploadProdRelease --no-configuration-cache
-
-      - name: 🤖 Prepare Amazon Listing
-        if: github.event.inputs.release_type == 'beta' && github.event.inputs.amazon == 'true'
-        run: bundle exec fastlane prep_amazon
-        env:
-          AMAZON_APPSTORE_CLIENT_ID: ${{ secrets.AMAZON_APPSTORE_CLIENT_ID }}
-          AMAZON_APPSTORE_CLIENT_SECRET: ${{ secrets.AMAZON_APPSTORE_CLIENT_SECRET }}
-          AMAZON_APPSTORE_APP_ID: ${{ secrets.AMAZON_APPSTORE_APP_ID }}
 
       - name: 🍏 Update Changelog
         id: update_changelog
@@ -283,3 +264,10 @@ jobs:
         if: github.event.inputs.beta == 'true'
         run: bundle exec fastlane promote_to_beta
 
+      - name: 🤖 Prepare Amazon Listing
+        if: github.event.inputs.release_type == 'beta' && github.event.inputs.amazon == 'true'
+        run: bundle exec fastlane prep_amazon
+        env:
+          AMAZON_APPSTORE_CLIENT_ID: ${{ secrets.AMAZON_APPSTORE_CLIENT_ID }}
+          AMAZON_APPSTORE_CLIENT_SECRET: ${{ secrets.AMAZON_APPSTORE_CLIENT_SECRET }}
+          AMAZON_APPSTORE_APP_ID: ${{ secrets.AMAZON_APPSTORE_APP_ID }}
