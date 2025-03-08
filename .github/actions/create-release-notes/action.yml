@@ -49,8 +49,12 @@ runs:
         echo "Full Changelog:"
         CHANGELOG="${{ steps.generate-notes.outputs.result }}"
         echo -e "$CHANGELOG"
-        printf "$CHANGELOG" > ./app/build/outputs/changelogGithub.md
+        printf "$CHANGELOG" > ./app/build/outputs/changelogGithub
 
         echo "Beta Changelog:"
         git log --format="* %s" HEAD^..HEAD
-        git log --format="* %s" HEAD^..HEAD > ./app/build/outputs/changelogBeta.md
+        git log --format="* %s" HEAD^..HEAD > ./app/build/outputs/changelogBeta
+        
+        echo "Update Beta Changelog For PlayStore:"
+        git log --format="* %s" HEAD^..HEAD
+        git log --format="* %s" HEAD^..HEAD > ./fastlane/metadata/android/en-US/changelogs/default.txt

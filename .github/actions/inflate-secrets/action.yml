@@ -10,6 +10,9 @@ inputs:
   firebase-creds:
     description: 'The firebase credentials to inflate'
     required: true
+  playstore-creds:
+    description: 'The PlayStore credentials to inflate'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -38,3 +41,10 @@ runs:
         CREDS: ${{ inputs.firebase-creds }}
       run: |
         echo $CREDS > app/firebaseAppDistributionServiceCredentialsFile.json
+
+    - name: Inflate PlayStore Credentials
+      shell: bash
+      env:
+        $PLAYSTORE: ${{ inputs.playstore-creds }}
+      run: |
+        echo $PLAYSTORE | base64 --decode > app/playStorePublishServiceCredentialsFile.json

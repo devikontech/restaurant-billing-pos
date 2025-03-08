@@ -103,12 +103,6 @@ android {
         }
     }
 
-    firebaseAppDistribution {
-        serviceCredentialsFile = "app/firebaseAppDistributionServiceCredentialsFile.json"
-        releaseNotesFile = "./app/build/outputs/changelogBeta.md"
-        groups = "continuous-deployment"
-    }
-
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -226,6 +220,12 @@ sentry {
     authToken = System.getenv("SENTRY_AUTH_TOKEN")
     includeSourceContext = true
     telemetry = false
+}
+
+firebaseAppDistribution {
+    serviceCredentialsFile = "app/firebaseAppDistributionServiceCredentialsFile.json"
+    releaseNotesFile = "./app/build/outputs/changelogBeta"
+    groups = "continuous-deployment"
 }
 
 // Disable to fix memory leak and be compatible with the configuration cache.
