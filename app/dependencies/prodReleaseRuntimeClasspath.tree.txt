@@ -456,7 +456,7 @@
 |    +--- com.google.firebase:firebase-annotations:16.2.0 (*)
 |    +--- com.google.firebase:firebase-installations-interop:17.1.0 -> 17.2.0 (*)
 |    +--- com.google.firebase:protolite-well-known-types:18.0.0
-|    |    \--- com.google.protobuf:protobuf-javalite:3.14.0 -> 4.26.1
+|    |    \--- com.google.protobuf:protobuf-javalite:3.14.0 -> 4.30.0
 |    +--- com.google.firebase:firebase-common:21.0.0 (*)
 |    +--- com.google.firebase:firebase-common-ktx:21.0.0 (*)
 |    +--- com.google.firebase:firebase-components:18.0.0 (*)
@@ -587,7 +587,7 @@
 |    |    +--- androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.6 (c)
 |    |    \--- androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.6 (c)
 |    +--- com.google.android.gms:play-services-tasks:18.0.1 -> 18.2.0 (*)
-|    +--- com.google.protobuf:protobuf-javalite:3.21.11 -> 4.26.1
+|    +--- com.google.protobuf:protobuf-javalite:3.21.11 -> 4.30.0
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:1.8.22 -> 2.0.20 (*)
 |    +--- androidx.appcompat:appcompat:1.2.0 -> 1.7.0
 |    |    +--- androidx.activity:activity:1.7.0 -> 1.9.2 (*)
@@ -1230,8 +1230,8 @@
 |    |    +--- project :core:datastore
 |    |    |    +--- androidx.datastore:datastore:1.1.1 (*)
 |    |    |    +--- project :core:datastore-proto
-|    |    |    |    +--- com.google.protobuf:protobuf-kotlin-lite:4.26.1
-|    |    |    |    |    +--- com.google.protobuf:protobuf-javalite:4.26.1
+|    |    |    |    +--- com.google.protobuf:protobuf-kotlin-lite:4.30.0
+|    |    |    |    |    +--- com.google.protobuf:protobuf-javalite:4.30.0
 |    |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.6.0 -> 2.0.20 (*)
 |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:2.0.20 (*)
 |    |    |    +--- project :core:model (*)
