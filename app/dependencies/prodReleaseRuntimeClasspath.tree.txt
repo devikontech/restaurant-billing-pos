@@ -666,8 +666,8 @@
 |    +--- com.google.dagger:hilt-core:2.52 (*)
 |    +--- com.google.dagger:hilt-android:2.52 (*)
 |    +--- project :core:model
-|    |    +--- org.jetbrains.kotlinx:kotlinx-datetime:0.6.0
-|    |    |    \--- org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.6.0
+|    |    +--- org.jetbrains.kotlinx:kotlinx-datetime:0.6.2
+|    |    |    \--- org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.6.2
 |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 2.0.20 (*)
 |    |    +--- com.squareup.moshi:moshi:1.15.1
 |    |    |    +--- com.squareup.okio:okio:3.7.0 -> 3.8.0 (*)
