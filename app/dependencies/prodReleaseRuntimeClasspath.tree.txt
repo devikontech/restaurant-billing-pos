@@ -670,7 +670,7 @@
 |    |    +--- org.jetbrains.kotlinx:kotlinx-datetime:0.6.0
 |    |    |    \--- org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.6.0
 |    |    |         \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.21 -> 2.0.21 (*)
-|    |    +--- com.squareup.moshi:moshi:1.15.1
+|    |    +--- com.squareup.moshi:moshi:1.15.2
 |    |    |    +--- com.squareup.okio:okio:3.7.0 -> 3.8.0 (*)
 |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21 -> 1.9.0 (*)
 |    |    +--- org.jetbrains.kotlin:kotlin-stdlib:2.0.20 -> 2.0.21 (*)
