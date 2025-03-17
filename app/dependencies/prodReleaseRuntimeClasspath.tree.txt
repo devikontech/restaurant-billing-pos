@@ -1176,8 +1176,8 @@
 |    |    |    |    +--- com.squareup.okio:okio:{require 1.17.6; reject _} -> 3.8.0 (*)
 |    |    |    |    \--- androidx.appcompat:appcompat:{require 1.6.1; reject _} -> 1.7.0 (*)
 |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.9.22 -> 2.0.21 (*)
-|    |    +--- nl.dionsegijn:konfetti-compose:2.0.4
-|    |    |    +--- nl.dionsegijn:konfetti-core:2.0.4
+|    |    +--- nl.dionsegijn:konfetti-compose:2.0.5
+|    |    |    +--- nl.dionsegijn:konfetti-core:2.0.5
 |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.8.10 -> 2.0.21 (*)
 |    |    |    +--- androidx.compose.foundation:foundation:1.4.3 -> 1.7.2 (*)
 |    |    |    +--- androidx.compose.ui:ui:1.4.3 -> 1.7.2 (*)
@@ -1353,7 +1353,7 @@
 |    |                   \--- org.jetbrains.kotlin:kotlin-stdlib-common:1.4.32 -> 2.0.21 (*)
 |    +--- com.google.zxing:core:3.5.3
 |    +--- io.coil-kt:coil-compose:2.6.0 (*)
-|    \--- nl.dionsegijn:konfetti-compose:2.0.4 (*)
+|    \--- nl.dionsegijn:konfetti-compose:2.0.5 (*)
 +--- project :feature:addonitem
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:2.0.20 -> 2.0.21 (*)
 |    +--- com.google.dagger:hilt-core:2.55 (*)
@@ -1687,7 +1687,7 @@
 |    +--- androidx.compose:compose-bom:2024.09.02 (*)
 |    +--- org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8 (*)
 |    +--- androidx.compose.ui:ui-tooling-preview -> 1.7.2 (*)
-|    \--- nl.dionsegijn:konfetti-compose:2.0.4 (*)
+|    \--- nl.dionsegijn:konfetti-compose:2.0.5 (*)
 +--- project :feature:market
 |    +--- org.jetbrains.kotlin:kotlin-stdlib:2.0.20 -> 2.0.21 (*)
 |    +--- com.google.dagger:hilt-core:2.55 (*)
