@@ -75,7 +75,7 @@ twitter-detekt-compose = "0.0.26"
 vanpraComposeVersion = '0.9.0'
 zxing = "3.5.3"
 saketSwipe = "1.2.0"
-konfetti-compose = "2.0.4"
+konfetti-compose = "2.0.5"
 compiler-report = "1.3.1"
 firebaseAppdistributionGradle = "5.0.0"
 
